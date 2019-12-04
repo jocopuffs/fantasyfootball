@@ -15,7 +15,9 @@ body {
 }
 
 .background {
-  background-color: lightblue;
+  /* background-color: lightblue;
+  height: 100%;
+  width: 100%; */
 }
 
 .title {
@@ -24,4 +26,12 @@ body {
   font-family: georgia;
   color: black;
   position: flex;
+}
+
+.add {
+  position: relative;
+  margin: auto 0;
+  background-color:red;
+  height: 30%;
+  width: 30%;
 }
