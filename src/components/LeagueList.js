@@ -4,12 +4,10 @@ import NewLeagueForm from './NewLeague';
 
 const LeagueList = () => {
     const [league, setLeague] = useState([
-        {leagueName: 'joe league one', id: 1},
-        {leagueName: 'joe league two', id: 2},
-        {leagueName: 'joe league three', id: 3},
+        {leagueName: 'joe league one', leagueId: 58950239},
     ]);
     const addLeague = (leagueName) => {
-        setLeague([...league, {leagueName, id: uuid()}])
+        setLeague([...league, {leagueName, id: 3}])
     }
 useEffect(()=> {
     console.log('useEffect hook ran', league)
@@ -17,7 +15,7 @@ useEffect(()=> {
     return (
     <div className="league-list">
         <ul>
-            {league.map(team => {return (<li key={team.id}>{team.leagueName}</li>)})}
+            {league.map(team => {return (<li key={team.leagueId}>{team.leagueName}</li>)})}
         </ul>
         <NewLeagueForm addLeague = {addLeague} />
     </div>

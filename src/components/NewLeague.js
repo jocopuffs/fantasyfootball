@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const NewLeagueForm = ({ addLeague }) => {
-    const [leagueName, setLeague] = useState('');
+    const [leagueId, setLeague] = useState('');
     const handleSubmit = (e) => {
         e.preventDefault();
-        addLeague(leagueName);
+        addLeague(leagueId);
         setLeague('');
     }
     return (
     <form onSubmit={handleSubmit}>
         <label>league id:</label>
-        <input type="text" value={leagueName} required onChange={(e) => setLeague(e.target.value)}/>
+        <input type="number" value={leagueId} required onChange={(e) => setLeague(e.target.value)}/>
         <input type="submit" value="add league"/>
     </form>
     );
