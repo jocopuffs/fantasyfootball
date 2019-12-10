@@ -7,7 +7,7 @@ const LeagueList = () => {
         {leagueName: 'joe league one', leagueId: 58950239},
     ]);
     const addLeague = (leagueName) => {
-        setLeague([...league, {leagueName, id: 3}])
+        setLeague([...league, {leagueName, leagueId: 3}])
     }
 useEffect(()=> {
     console.log('useEffect hook ran', league)
