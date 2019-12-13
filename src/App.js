@@ -1,56 +1,165 @@
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import { Client } from 'espn-fantasy-football-api';
 import LeagueList from './components/LeagueList';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 
-const myClient = new Client({ leagueId: 58950239});
-myClient.setCookies({ espnS2: 'AEAxAvlN7dGefUrKDnhqNIdJZaD8fTgUD8fQARKqAUoGwNk0Yo2%2BtiTnrES1HH0w6JQnpFI7b4%2FyfntfXJq2E8O9g84jIyhWZkvX1NFoSc%2BRdyts538tc76FoF4VeB1Qly9HUuyAw3%2BpJwJl0z8a0G3nNAoZrujDYphX6dqePwnjOcNtHTf%2BTOW7TsWapVQ4Q7AI%2FlArkQ%2FeWNBPTsqnEa6KnFsGrh5aKJSqACfI7sso9%2FJtRgbeDGE8NlYIu4ag4talHj1xXfUUhnxVhNECsPb4', SWID: '{048EDC5B-DBC9-4AF7-9A91-9DB57A99DFE2}' });
+class Player extends Component {
+  constructor() {
+      super()
+      this.state = {
+          isSelected: false,
+      }
+  }
 
-// const LeagueList = () => {
-//   const [league, setLeague] = useState([
-// 
-//   title: 'joe league', id:58950239,
-// }
-//   ]);
-// const addLeague = (title) => {
-//   setLeague([...league, {title}])
-// }
+  handleClick= () => {
+      this.setState(state =>({
+      isSelected: !state.isSelected}))
+      }
 
-// }
+  render() {
+      const {name } = this.props;
+      const {predicted} = this.props;
+      const {isSelected} = this.state;
 
-// const NewLeagueForm = ({ addLeague }) => {
-//   const [title, setTitle] = useState('');
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     addLeague(title);
-//   }
-//   return(
-//     <form onSubmit={handleSubmit}>
-//       <label>ESPN League ID</label>
-//       <input type="number" value={title} required onChange={(e)=> setTitle(e.target.value)}></input>
-//       <input type="submit" value="add league"></input>
-//     </form>
-//   );
-// }
+      return(
+          
+          <div onClick={this.handleClick} className={'Player_Container'}>
+              <h3>{name}</h3>
+              {isSelected && <p>{predicted}</p>}
+          </div>
 
-
+   
+      )
+  }
+}
 
 
-function App() {
+class Team extends Component {
+    constructor() {
+        super()
+        this.state = {
+            isSelected: false,
+        }
+    }
 
-  return (
-    <div className="App">
-      <LeagueList>
-        
-      </LeagueList>
-    </div>
-  );
+    handleClick= () => {
+        this.setState(state =>({
+        isSelected: !state.isSelected}))
+        }
+
+    render() {
+        const {name} = this.props;
+        const {predicted} = this.props;
+        const {isSelected} = this.state;
+
+        return(
+            
+            <div onClick={this.handleClick} className={'Team_Container'}>
+                <h3>{name}</h3>
+                {isSelected && <p>{predicted}</p>}
+            </div>
+
+     
+        )
+    }
 }
 
 
 
+
+const myClient = new Client({ leagueId: 109192});
+console.log(myClient);
+
+const HomePage = () => (
+  <h2 className="home">Hello! For my application lab side project, I decided to make an app which uses an ESPN API to take the predicted scores of my current lineup, and see whether there are players on the waiver wire available to pick up which have a higher predicted score, to hopefully help optimize my final team performance. If there is such a player available, they will appear on the avaiailable player tab</h2>
+)
+
+class App extends Component {
+
+  render() {
+    return(
+<Router>
+<div className="App">
+  <AppBar posistion="static" color="default">
+    <Toolbar>
+      <Typography variant="h4" color="inherit">Fantasy Football</Typography>
+    </Toolbar>
+  </AppBar>
+      <header className="App-header">
+        <h1 className="App-title">
+          fantasy football players
+        </h1>
+        <div className="toolbar">
+          <Link to ="/">Home</Link>
+          <Link to ="/my-team">My Team</Link>
+          <Link to ="/free-agents">Available Players</Link>
+        </div>
+      </header>
+      <Route path="/" exact component={HomePage}></Route>
+      <Route path="/free-agents" component = {FreeAgentsPage}></Route>
+      <Route path="/my-team"component={MyTeamPage}></Route>
+      <div className="App-body">
+        
+      </div>
+    </div>
+</Router>
+    );
+  }
+}
+
+const FreeAgentsPage = () => (
+  <div>
+    <div>
+      <h5 className="headings">WR</h5>
+    </div>
+    <Player name="Darius Slayton" predicted="11.1 vs DJ Chark 9.8"></Player>
+    <Player name="Anthony Brown" predicted="10.5 vs DJ Chark 9.8"></Player>
+    <Player name="Will Fuller" predicted="10.4 vs DJ Chark 9.8"></Player>
+    <Player name="Tajh Boyd" predicted="9.9 vs DJ Chark 9.8"></Player>
+    <div>
+      <h5 className="headings">TE</h5>
+      <Player name="Mark Andrews" predicted="10.4 vs Jared Cook 9.4"></Player>
+    <Player name="Tyler Higbee" predicted="10.1 vs Jared Cook 9.4" ></Player>
+    </div>
+  </div>
+  
+)
+
+const MyTeamPage = () => (
+  <div>
+    <div>
+      <h5 className="headings">QB</h5>
+    </div>
+    <Team name="Drew Brees" predicted="19.9"></Team>
+    <div>
+      <h5 className="headings">RB</h5>
+    </div>
+    <Team name="Ezikiel Elliot" predicted="18.7"></Team>
+    <Team name="Chrisitan McCaffrey" predicted="24.3"></Team>
+    <div>
+      <h5 className="headings">WR</h5>
+    </div>
+    <Team name="Keenan Allen" predicted="12.5"></Team>
+    <div className="rote">
+    <Team name="DJ Chark" predicted ="9.8 && CHECK AVAILABLE"></Team>
+    </div>
+    <div>
+      <h5 className="headings">TE</h5>
+    </div>
+    <div className="rote">
+    <Team name="Jared Cook" predicted="9.4 && CHECK AVAILABLE"></Team>
+    </div>
+    <div>
+      <h5 className="headings">K</h5>
+    </div>
+    <Team name="Younghoe Koo" predicted="8.5"></Team>
+  </div>
+)
+
 export default App;
 
-
-//restructure

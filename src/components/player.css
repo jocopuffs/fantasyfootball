@@ -1,0 +1,11 @@
+.Player_Container{
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.Team_Container{
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+}
