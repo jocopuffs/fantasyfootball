@@ -87,7 +87,7 @@ class App extends Component {
 <div className="App">
   <AppBar posistion="static" color="default">
     <Toolbar>
-      <Typography variant="h4" color="inherit">Fantasy Football</Typography>
+      <Typography variant="h4" color="inherit">Joe's Fantasy Football Side Project</Typography>
     </Toolbar>
   </AppBar>
       <header className="App-header">
